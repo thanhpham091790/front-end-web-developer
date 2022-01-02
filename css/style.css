@@ -1,22 +1,109 @@
-html {
-  font-family: sans-serif;
+/* General setup */
+
+* {
+  box-sizing: border-box;
 }
 
-/* Your CSS below here */
+body {
+  margin: 0 auto;
+  min-width: 1000px;
+  max-width: 1400px;
+}
+
+/* Layout */
+
+section {
+  float: left;
+  width: 50%;
+}
+
+aside {
+  float: left;
+  width: 30%;
+}
+
+nav {
+  float: left;
+  width: 20%;
+}
+
+footer {
+  clear: both;
+}
+
+header, section, aside, nav, footer {
+  padding: 20px;
+}
+
+/* header and footer */
+
+header, footer {
+  border-top: 5px solid #a66;
+  border-bottom: 5px solid #a66;
+}
+
+/* WRITE YOUR CODE BELOW HERE */
+@font-face {
+  font-family: RobotoSlab;
+  src: url(RobotoSlab-VariableFont_wght.ttf);
+}
+@font-face {
+  font-family: Oswald;
+  src: url(Oswald-VariableFont_wght.ttf);
+}
 html{
   font-size: 10px;
 }
-p{
-  width: 20rem;
-  height: 5rem;
-  line-height: 5rem;
+body{
+  font-family: RobotoSlab, serif;
+  line-height: 2;
+}
+h1,h2{
+  font-family: Oswald, sans-serif;
+  letter-spacing: 0.3rem;
+}
+h1{
+  font-size: 3.2rem;
   text-align: center;
-  font-size: 1.8rem;
-  background-color: red;
+}
+h2{
+  font-size: 2rem;
+}
+p, li{
+  font-size: 1.6rem;
+  letter-spacing: 0.2rem;
+  word-spacing: 0.2rem;
+}
+h2 + p{
+  text-indent: 2rem;
+}
+a{
+  color: #a66;
+  outline: none;
+}
+a:hover, a:focus{
+  text-decoration: none;
+}
+a:active{
   color: red;
-  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0,0,0,1);
-  border-radius: 0.5rem;
-  border: 0.1rem solid red;
-  background-image: linear-gradient(to bottom right, rgba(0,0,0,0) 30%,rgba(0,0,0,.2));
-  box-shadow: 0.4rem 0.3rem 0.3rem rgba(0,0,0,1), inset 0 0 rgba(256,256,256,0.5);
+}
+a[href^=https]::after{
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url(external-link-52.png);
+  background-size: cover;
+}
+nav ul{
+  list-style-type: none;
+}
+nav ul li{
+  border: 0.1rem solid #a66;
+  padding: 1rem 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+nav ul li a{
+  text-decoration: none;
 }
