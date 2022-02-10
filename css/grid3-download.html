@@ -30,23 +30,31 @@
         display: grid;
         grid-template-columns: 1fr 2fr;
         gap: 10px;
-        grid-template-areas: 
+        /* grid-template-areas: 
         "one one"
         "two three"
-        ". four";
+        ". four"; */
       }
       
       .one{
-        grid-area: one;
+        /* grid-area: one; */
+        grid-column: 1/3;
+        grid-row: 1;
       }
       .two{
-        grid-area: two;
+        /* grid-area: two; */
+        grid-column: 1/2;
+        grid-row: 2;
       }
       .three{
-        grid-area: three;
+        /* grid-area: three; */
+        grid-column: 2/3;
+        grid-row: 2;
       }
       .four{
-        grid-area: four;
+        /* grid-area: four; */
+        grid-column: 2/3;
+        grid-row: 3;
       }
     </style>
 
