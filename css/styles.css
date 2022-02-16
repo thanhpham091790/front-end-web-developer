@@ -1,62 +1,72 @@
-/* General styles - put these straight into your stylesheet */
 body {
+    background-color: #fff;
+    color: #333;
     margin: 0;
-  }
-  
-  html {
-    font-family: 'Helvetica neue', Arial, 'sans serif';
-    font-size: 10px;
-    background-color: #ccc;
-  }
-/* Selectors to be matched up with rulesets */
-
-.card article img{
-    max-height: 100%;
-    float: right;
-  }
-  
-.card footer{
-    background-image: linear-gradient(to bottom,rgba(0,0,0,0), rgba(0,0,0,0.1));
-    border-radius: 0 0 1.5em 1.5em;
-  }
-.card header{
-    background-image: linear-gradient(to bottom,rgba(0,0,0,0.1), rgba(0,0,0,0));
-    border-radius: 1.5em 1.5em 0 0;
-  }
-  
-.card{
-    width: 35em;
-    height: 22em;
-    margin: 5em auto;
-    background-color: red;
-    border: 0.2em solid black;
-    border-radius: 1.5em;
+    font: 1.2em / 1.2 Arial, Helvetica, sans-serif;
   }
 
-header{
-    height: 3em;
-    padding: 1em;
-}
-footer{
-    height: 3em;
-    padding: 1em;
-}
-article{
-    height: 12em;
-    background-color: rgba(0, 0, 0, .5);
-}
-h2, p{
+  img {
+      max-width: 100%;
+      display: block;
+  }
+  
+  .logo {
+    font-size: 200%;
+    padding: 50px 20px;
+    margin: 0 auto;
+    max-width: 980px;
+  }
+  
+  .grid {
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: 980px;
+  }
+  
+  nav {
+    background-color: #000;
+    padding: .5em;
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
+  
+  nav ul {
     margin: 0;
-}
-header h2{
-    font-size: 2em;
-    line-height: 1.5em;
-}
-footer p{
-    font-size: 1.5em;
-    line-height: 2em;
-}
-article p{
-    padding: 1em;
-    color: white;
-}
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: .5em 1em;
+  }
+  
+  .photos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+  }
+
+  .feature {
+      width: 200px;
+  }
+
+  article img{
+    float: left;
+    margin-right: 20px;
+  }
+
+  main{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+  }
