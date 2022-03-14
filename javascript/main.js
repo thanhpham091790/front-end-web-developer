@@ -1,55 +1,176 @@
-const customName = document.getElementById('customname');
-const randomize = document.querySelector('.randomize');
-const story = document.querySelector('.story');
+// setup canvas
 
-function randomValueFromArray(array){
-  const random = Math.floor(Math.random()*array.length);
-  return array[random];
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
+
+const width = canvas.width = window.innerWidth;
+const height = canvas.height = window.innerHeight;
+
+const para = document.querySelector('p');
+let count = 0;
+
+// function to generate random number
+
+function random(min, max) {
+  const num = Math.floor(Math.random() * (max - min + 1)) + min;
+  return num;
 }
 
-const storyText = "It was 94 fahrenheit outside, so :insertx: went for a walk. When they got to :inserty:, they stared in horror for a few moments, then :insertz:. Bob saw the whole thing, but was not surprised — :insertx: weighs 300 pounds, and it was a hot day.";
-const insertX = [
-    "Willy the Goblin",
-"Big Daddy",
-"Father Christmas"
-];
-const insertY = [
-    "the soup kitchen",
-"Disneyland",
-"the White House"
-];
-const insertZ = [
-    "spontaneously combusted",
-"melted into a puddle on the sidewalk",
-"turned into a slug and crawled away"
-];
+// function to generate random color
 
-randomize.addEventListener('click', result);
-
-function result() {
-    let newStory = storyText;
-
-    let xItem = randomValueFromArray(insertX);
-    let yItem = randomValueFromArray(insertY);
-    let zItem = randomValueFromArray(insertZ);
-
-    newStory = newStory.replace(":insertx:",xItem);
-    newStory = newStory.replace(":insertx:",xItem);
-    newStory = newStory.replace(":inserty:",yItem);
-    newStory = newStory.replace(":insertz:",zItem);
-
-  if(customName.value !== '') {
-    const name = customName.value;
-    newStory = newStory.replace("Bob", name);
-  }
-
-  if(document.getElementById("uk").checked) {
-    const weight = Math.round(300/14) + " stone";
-    newStory = newStory.replace("300 pounds", weight);
-    const temperature =  Math.round((94-32)*5/9) + " centigrade";
-    newStory = newStory.replace("94 fahrenheit", temperature);
-  }
-
-  story.textContent = newStory;
-  story.style.visibility = 'visible';
+function randomRGB() {
+  return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
 }
+
+class Shape{
+  constructor(x,y,velX,velY){
+    this.x = x;
+    this.y = y;
+    this.velX = velX;
+    this.velY = velY;
+  }
+}
+
+class Ball extends Shape{
+  constructor(x,y,velX,velY,color,size){
+    super(x,y,velX,velY);
+    this.color = color;
+    this.size = size;
+    this.exists = true;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.arc(this.x,this.y,this.size,0,2*Math.PI);
+    ctx.fill();
+  }
+  update(){
+    if(((this.x + this.size) >= width) || ((this.x - this.size) <= 0)){
+      this.velX = -(this.velX);
+    }
+    if(((this.y + this.size) >= height) || ((this.y - this.size) <= 0)){
+      this.velY = -(this.velY);
+    }
+    this.x += this.velX;
+    this.y += this.velY;
+  }
+  collisionDetect(){
+    for(const ball of balls){
+      if(!(this===ball) && ball.exists){
+        const dx = this.x - ball.x;
+        const dy = this.y - ball.y;
+        const distance = Math.sqrt(dx*dx + dy*dy);
+        if(distance < this.size + ball.size){
+          this.color = randomRGB();
+          ball.color = randomRGB();
+        }
+      }
+    }
+  }
+}
+
+const balls = [];
+while(balls.length < 25){
+  const size = random(10,20);
+  const ball = new Ball(
+    random(0+size, width-size),
+    random(0+size, height-size),
+    random(-7,7),
+    random(-7,7),
+    randomRGB(),
+    size
+  );
+  balls.push(ball);
+  count++;
+  para.textContent = `Ball count: ${count}`;
+}
+
+class EvilCircle extends Shape{
+  constructor(x,y){
+    super(x,y,20,20);
+    this.color = 'white';
+    this.size = 10;
+    window.addEventListener('keydown',(e)=>{
+      switch(e.key){
+        case 'a': 
+          this.x -= this.velX;
+          break;
+        
+        case 'd': 
+          this.x += this.velX;
+          break;
+        
+        case 's': 
+          this.y += this.velY;
+          break;
+        
+        case 'w': 
+          this.y -= this.velY;
+          break;
+        
+      }
+    });
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = this.color;
+    ctx.arc(this.x,this.y,this.size,0,2*Math.PI);
+    ctx.stroke();
+  }
+  checkBounds(){
+    if((this.x + this.size) >= width){
+      this.x -= this.size;
+    }
+    if((this.x - this.size) <= 0){
+      this.x += this.size;
+    }
+    if((this.y + this.size) >= height){
+      this.y -= this.size;
+    }
+    if((this.y - this.size) <= 0){
+      this.y += this.size;
+    }
+  }
+  collisionDetect(){
+    for(const ball of balls){
+      if(ball.exists){
+        const dx = this.x - ball.x;
+        const dy = this.y - ball.y;
+        const distance = Math.sqrt(dx*dx + dy*dy);
+        if(distance < this.size + ball.size){
+          ball.exists = false;
+          count--;
+          para.textContent = `Ball count: ${count}`;
+        }
+      }
+    }
+  }
+}
+
+const evilCircle = new EvilCircle(
+  random(10, width-10),
+  random(10, height-10)
+);
+
+
+function loop(){
+  ctx.fillStyle = 'rgba(0,0,0,0.9)';
+  ctx.fillRect(0,0,width,height);
+
+  evilCircle.draw();
+  evilCircle.checkBounds();
+  evilCircle.collisionDetect();
+
+  for(const ball of balls){
+    if(ball.exists){
+      ball.draw();
+      ball.update();
+      ball.collisionDetect();
+    }
+  }
+
+  requestAnimationFrame(loop);
+}
+
+loop();
