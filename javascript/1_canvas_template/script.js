@@ -7,14 +7,26 @@ ctx.fillStyle = 'rgb(0,0,0)';
 ctx.fillRect(0,0,width,height);
 
 ctx.fillStyle = 'rgb(255,0,0)';
-ctx.fillRect(50,50,100,150);
+ctx.beginPath();
+ctx.moveTo(50,50);
 
-ctx.fillStyle = 'rgb(0,255,0)';
-ctx.fillRect(75,75,100,100);
+function degToRad(d){
+    return d*Math.PI/180;
+}
 
-ctx.fillStyle = 'rgba(255,0,255,0.75)';
-ctx.fillRect(25,100,175,50);
+ctx.lineTo(150,50);
+const triHeight = 50*Math.tan(degToRad(60));
+ctx.lineTo(100, 50+triHeight);
+ctx.lineTo(50,50);
+ctx.fill();
 
-ctx.strokeStyle = 'rgb(255,255,255)';
-ctx.lineWidth = 5;
-ctx.strokeRect(25,25,175,200);
+ctx.fillStyle = 'blue';
+ctx.beginPath();
+ctx.arc(150,106,50,degToRad(0),degToRad(360),false);
+ctx.fill();
+
+ctx.fillStyle = 'yellow';
+ctx.beginPath();
+ctx.arc(200,106,50,degToRad(-45),degToRad(45), true);
+ctx.lineTo(200,106);
+ctx.fill();
