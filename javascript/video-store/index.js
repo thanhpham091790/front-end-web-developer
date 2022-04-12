@@ -125,3 +125,10 @@ request.addEventListener('upgradeneeded', e => {
 
   console.log('Database setup complete');
 });
+
+// Register service worker to control making site work offline
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/javascript/video-store/sw.js')
+    .then(() => console.log('Service Worker Registered'));
+}
