@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Basic controls: Task 1</title>
+    <style>
+      body {
+        background-color: #fff;
+        color: #333;
+        font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+        padding: 1em;
+        margin: 0;
+      }
+      form{
+        border: 1px solid #ccc;
+        margin: 0 auto;
+        width: 300px;
+        border-radius: 10px;
+      }
+      ul{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul li{
+        margin: 10px;
+      }
+      ul li label{
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+      }
+      ul li button{
+        margin-left: 105px;
+      }
+      ul li input{
+        width: 170px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form>
+      <ul>
+        <li>
+          <label for="user_id">User ID</label>
+          <input type="text" id="user_id" name="user_id">
+        </li>
+        <li>
+          <label for="user_pwd">Password</label>
+          <input type="password" id="user_pwd" name="user_pwd">
+        </li>
+        <li>
+          <button type="submit">Log in</button>
+        </li>
+      </ul>
+    </form>
+  </body>
+
+</html>
