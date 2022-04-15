@@ -1,45 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <title>Other controls: Task 3</title>
-    <style>
-      body {
-        background-color: #fff;
-        color: #333;
-        font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
-        padding: 1em;
-        margin: 0;
-      }
 
-      * {
-        box-sizing: border-box;
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <title>Other controls: Task 3</title>
+  <style>
+    body {
+      background-color: #fff;
+      color: #333;
+      font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+      padding: 1em;
+      margin: 0;
+    }
 
-  <body>
-    <form>
-      <ul>
-        <li>
-          <label for="food">Enter your favorite food:</label>
-          <input list="food-list" id="food">
-          <datalist id="food-list">
-            <option>Salad</option>
-            <option>Curry</option>
-            <option>Pizza</option>
-            <option>Fajitas</option>
-            <option>Biscuits</option>
-            <option>Crisps</option>
-            <option>Fruit</option>
-            <option>Breadsticks</option>
-          </datalist>
-        </li>
-        <li>
-          <button>Submit choice</button>
-        </li>
-      </ul>
-    </form>
-  </body>
+    * {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <form>
+    <input type="text" id="food">
+    <div id="list">
+      <div><input type="checkbox" name="food" value="Salad">Salad</div>
+      <div><input type="checkbox" name="food" value="Curry">Curry</div>
+      <div><input type="checkbox" name="food" value="Pizza">Pizza</div>
+      <div><input type="checkbox" name="food" value="Fajita">Fajita</div>
+      <div><input type="checkbox" name="food" value="Biscui">Biscui</div>
+      <div><input type="checkbox" name="food" value="Crisp">Crisp</div>
+      <div><input type="checkbox" name="food" value="Fruit">Fruit</div>
+      <div><input type="checkbox" name="food" value="Breadsticks">Breadsticks</div>
+    </div>
+    <button>Submit choice</button>
+  </form>
+  <script>
+    const food = document.querySelector('#food');
+    const items = document.querySelectorAll('input[type="checkbox"]');
+    const button = document.querySelector('button');
+
+    food.addEventListener('input',(e)=>{
+      const input = e.target.value.toString().toLowerCase();
+      for(const item of items){
+        if(item.value.toString().toLowerCase().includes(input)){
+          item.parentElement.hidden = false;
+        }else{
+          item.parentElement.hidden= true;
+        }
+      }
+    })
+
+    button.addEventListener('click',(e)=>{
+      e.preventDefault();
+      let data = '';
+      for(const item of items){
+        if(item.checked){
+          data += item.value + ' ';
+        }
+      }
+      console.log(data);
+    });
+  </script>
+</body>
 
 </html>
