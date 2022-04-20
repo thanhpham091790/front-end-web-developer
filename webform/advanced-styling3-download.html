@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Advanced styling: Task 3</title>
+  <style>
+    body {
+      background-color: #fff;
+      color: #333;
+      font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+      padding: 1em;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+      font-size: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    fieldset {
+      padding: 10px 30px 0;
+      width: 400px;
+    }
+
+    legend {
+      color: white;
+      background: black;
+      padding: 5px 10px;
+    }
+
+    fieldset>div {
+      margin-bottom: 20px;
+      display: flex;
+      flex-flow: row wrap;
+    }
+
+    button,
+    label,
+    input {
+      display: block;
+      font-family: inherit;
+      font-size: 100%;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 5px;
+      height: 30px;
+      outline: none;
+    }
+
+    input {
+      box-shadow: inset 1px 1px 3px #ccc;
+      border-radius: 5px;
+    }
+
+    input:hover,
+    input:focus {
+      background-color: #eee;
+    }
+
+    button {
+      width: 60%;
+      margin: 0 auto;
+    }
+
+    input+span {
+      position: relative;
+    }
+
+    input:required+span::after {
+      font-size: 0.7rem;
+      position: absolute;
+      padding: 5px;
+      top: -30px;
+      
+    }
+
+    input:required+span::after {
+      content: 'required';
+      color: white;
+      background-color: black;
+      left: -50px;
+    }
+
+    input:out-of-range+span::after {
+      content: 'Outside allowable value range';
+      color: white;
+      background-color: red;
+      width: 150px;
+      left: -160px;
+    }
+
+    input+span::before {
+      position: absolute;
+      right: -20px;
+      top: 5px;
+    }
+
+    input:invalid {
+      border: 2px solid red;
+    }
+
+    input:invalid+span::before {
+      content: '✖';
+      color: red;
+    }
+
+    input:valid+span::before {
+      content: '✓';
+      color: green;
+    }
+    input[type='text']:disabled{
+      background: #eee;
+      border: 1px solid #ccc;
+    }
+    .disabled-label{
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <form>
+    <fieldset id="shipping">
+      <legend>Shipping address</legend>
+      <div>
+        <label for="name1">Name: </label>
+        <input id="name1" name="name1" type="text" required>
+        <span></span>
+      </div>
+      <div>
+        <label for="address1">Address: </label>
+        <input id="address1" name="address1" type="text" required>
+        <span></span>
+      </div>
+      <div>
+        <label for="pcode1">Zip/postal code: </label>
+        <input id="pcode1" name="pcode1" type="text" required>
+        <span></span>
+      </div>
+    </fieldset>
+    <fieldset id="billing">
+      <legend>Billing address</legend>
+      <div>
+        <label for="billing-checkbox">Same as shipping address:</label>
+        <input type="checkbox" id="billing-checkbox" checked>
+      </div>
+      <div>
+        <label for="name" class="billing-label disabled-label">Name: </label>
+        <input id="name" name="name" type="text" disabled required>
+        <span></span>
+      </div>
+      <div>
+        <label for="address2" class="billing-label disabled-label">Address: </label>
+        <input id="address2" name="address2" type="text" disabled required>
+        <span></span>
+      </div>
+      <div>
+        <label for="pcode2" class="billing-label disabled-label">Zip/postal code: </label>
+        <input id="pcode2" name="pcode2" type="text" disabled required>
+        <span></span>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Feedback form</legend>
+
+      <p>Required fields are labelled with "required".</p>
+      <div>
+        <label for="fname">First name: </label>
+        <input id="fname" name="fname" type="text" required>
+        <span></span>
+      </div>
+      <div>
+        <label for="lname">Last name: </label>
+        <input id="lname" name="lname" type="text" required>
+        <span></span>
+      </div>
+      <div>
+        <label for="age">Age (must be 12+): </label>
+        <input id="age" name="age" type="number" min="12" max="120" required>
+        <span></span>
+      </div>
+
+      <div>
+        <label for="email">Email address: </label>
+        <input id="email" name="email" type="email">
+        <span></span>
+      </div>
+      <div><button>Submit</button></div>
+    </fieldset>
+  </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.getElementById('billing-checkbox').addEventListener('change',toggleBilling)
+    });
+    function toggleBilling(){
+      let billingItems = document.querySelectorAll('#billing input[type="text"]');
+      let billingLabels = document.querySelectorAll('#billing .billing-label');
+      for(let i=0; i<billingItems.length; i++){
+        billingItems[i].disabled = !billingItems[i].disabled;
+      }
+      if(billingItems[i].getAttribute('class')==='billing-label disabled-label'){
+        billingLabels[i].setAttribute('class','billing-label');
+      }else{
+        billingLabels[i].setAttribute('class','billing-label disabled-label');
+      }
+    }
+  </script>
+</body>
+
+</html>
