@@ -14,9 +14,32 @@ function App(props) {
     setTasks([...tasks, newTask]);
   }
 
+  function toggleTaskCompleted(id) {
+
+    const updatedTasks = tasks.map(task => {
+      if (id === task.id) {
+        return { ...task, completed: !task.completed }
+      }
+      return task;
+    });
+
+    setTasks(updatedTasks);
+  }
+
   const taskList = tasks.map((task) => {
-    return <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} />
+    return (
+      <Todo
+        id={task.id}
+        name={task.name}
+        completed={task.completed}
+        key={task.id}
+        toggleTaskCompleted={toggleTaskCompleted}
+      />
+    )
   });
+
+  const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
+  const headingText = `${taskList.length} ${tasksNoun} remaining`;
 
   return (
     <div className="todoapp stack-large">
@@ -28,7 +51,7 @@ function App(props) {
         <FilterButton type="Completed" />
       </div>
       <h2 id="list-heading">
-        3 tasks remaining
+        {headingText}
       </h2>
       <ul
         role="list"
