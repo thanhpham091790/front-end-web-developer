@@ -4,7 +4,7 @@ import Todo from './components/Todo';
 function App(props) {
 
   const taskList = props.tasks.map((task) => {
-    return <Todo id={task.id} name={task.name} completed={task.completed} />
+    return <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} />
   });
 
   return (
