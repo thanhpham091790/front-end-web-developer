@@ -4,18 +4,26 @@ import Form from './components/Form';
 import FilterButton from './components/FilterButton';
 import Todo from './components/Todo';
 
+const FILTER_MAP = {
+  All: () => true,
+  Active: (task) => !task.completed,
+  Completed: (task) => task.completed
+};
+const FILTER_NAMES = Object.keys(FILTER_MAP);
+console.log(FILTER_NAMES);
 
 function App(props) {
-
   const [tasks, setTasks] = useState(props.tasks);
+  const [filter, setFilter] = useState('All');
 
+  // Add a new task
   function addTask(name) {
     const newTask = { id: `todo-${nanoid()}`, name: name, completed: false };
     setTasks([...tasks, newTask]);
   }
 
+  // Mark a task as completed task.
   function toggleTaskCompleted(id) {
-
     const updatedTasks = tasks.map(task => {
       if (id === task.id) {
         return { ...task, completed: !task.completed }
@@ -26,7 +34,30 @@ function App(props) {
     setTasks(updatedTasks);
   }
 
-  const taskList = tasks.map((task) => {
+  // Edit a task
+  function editTask(id, newName) {
+    const editedTaskList = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, name: newName }
+      }
+      return task;
+    });
+    setTasks(editedTaskList);
+  }
+
+  // Delete a task
+  function deleteTask(id) {
+    const remainingTasks = tasks.filter((task) => {
+      if (task.id != id) {
+        return true;
+      }
+    });
+
+    setTasks(remainingTasks);
+  }
+
+  // Show all tasks
+  const taskList = tasks.filter(FILTER_MAP[filter]).map((task) => {
     return (
       <Todo
         id={task.id}
@@ -34,8 +65,22 @@ function App(props) {
         completed={task.completed}
         key={task.id}
         toggleTaskCompleted={toggleTaskCompleted}
+        editTask={editTask}
+        deleteTask={deleteTask}
       />
     )
+  });
+
+  // Show all filters
+  const filterList = FILTER_NAMES.map((name) => {
+    return (
+      <FilterButton
+        key={name}
+        name={name}
+        isPressed={name === filter}
+        setFilter={setFilter}
+      />
+    );
   });
 
   const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
@@ -46,9 +91,7 @@ function App(props) {
       <h1>TodoMatic</h1>
       <Form addTask={addTask} />
       <div className="filters btn-group stack-exception">
-        <FilterButton type="all" />
-        <FilterButton type="Active" />
-        <FilterButton type="Completed" />
+        {filterList}
       </div>
       <h2 id="list-heading">
         {headingText}
